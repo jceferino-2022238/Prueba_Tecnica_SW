@@ -1,4 +1,12 @@
 <?php
+/*require 'phpmailer/src/Exception.php';
+require 'phpmailer/src/PHPMailer.php';
+require 'phpmailer/src/SMTP.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
+
+$mail = new PHPMailer(true);*/
 /*
      require_once "recaptchalib.php";   
      $secret = "6Lf2jjAqAAAAAJ_Vn536jYN8nfKrQtN7ue2wS1JH";
@@ -116,11 +124,11 @@
                     <img style="width: 300px;" src="https://waterproof.com.gt/wp-content/uploads/2024/01/FOTO-CANCELACION.png" alt="">
                 </div>
                 <div class="form-main">   
-                    <form action="">
+                    <form action="send_email.php" method="POST">
                         <div class="row">
                             <div class="col">
                                 <label for="" class="form-label">Sede de tu servicio</label>
-                                <select class="form-select" id="" required>
+                                <select class="form-select" name="sede-servicio" id="" required>
                                     <option value="">Zona 16</option>
                                     <option value="">Zona 10</option>
                                     <option value="">Carretera Interamericana</option>
@@ -130,22 +138,22 @@
                             </div>
                             <div class="col">
                                 <label for="" class="form-label">Nombre del responsable</label>
-                                <input type="text" class="form-control" required>
+                                <input type="text" class="form-control" name="nombre-responsable" required>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
                                 <label for="" class="form-label">Teléfono del responsable</label>
-                                <input type="text" class="form-control" required>
+                                <input type="text" class="form-control" name="telefono-responsable" required>
                             </div>
                             <div class="col">
                                 <label for="" class="form-label">Correo del responsable</label>
-                                <input type="text" class="form-control" required>
+                                <input type="text" class="form-control" name="correo-responsable" required>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Indica la razón de tu cancelación</label>
-                            <select class="form-select" id="" required>
+                            <select class="form-select" id="" name="razon-cancelacion" required>
                                 <option value="">Vacaciones</option>
                                 <option value="">Viaje</option>
                                 <option value="">Enfermedad</option>
@@ -168,11 +176,11 @@
                         <div class="mb-3">
                             <label for="" class="form-label">Detalla la razón de tu cancelación y cuéntanos tu 
                                 experiencia en Waterproof</label>
-                            <input type="text" class="form-control" required>
+                            <input type="text" class="form-control" name="detalle-cancelacion" required>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">¿Recomendarias a Waterproof con tus familiares y/o amigos? </label>
-                            <select class="form-select" id="" required>
+                            <select class="form-select" id="" name="recomedarias-waterproof" required>
                                 <option value="">Muy probable</option>
                                 <option value="">Probablemente</option>
                                 <option value="">Muy poco probable</option>
@@ -180,7 +188,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">De 1 a 10, siendo 10 la nota más alta, ¿cómo calificarías a Waterproof? Tomando en cuenta todos los aspectos </label>
-                            <select class="form-select" id="" required>
+                            <select class="form-select" id="" name="calificacion-waterproof" required>
                                 <option value="">1</option>
                                 <option value="">2</option>
                                 <option value="">3</option>
@@ -197,24 +205,24 @@
                         <div class="mb-3">
                             <label for="" class="form-label">¿Qué debería de empezar a hacer Waterproof?
                             </label>
-                            <input type="text" class="form-control" required>
+                            <input type="text" class="form-control" name="que-hacer" required>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">¿Qué debería de dejar de hacer Waterproof?</label>
-                            <input type="text" class="form-control" required>
+                            <input type="text" class="form-control" name="dejar-hacer" required>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">¿Qué debería de seguir haciendo Waterproof?
                             </label>
-                            <input type="text" class="form-control" required>
+                            <input type="text" class="form-control" name="seguir-haciendo" required>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Nos encantaría que compartas un testimonial positivo o una felicitación a nuestro equipo de trabajo:</label>
-                            <input type="text" class="form-control" required>
+                            <input type="text" class="form-control" name="testimonial" required>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">¿A partir de que mes desea cancelar su servicio? </label>
-                            <select class="form-select" id="" required>
+                            <select class="form-select" id="" name="mes-cancelacion" required>
                                 <option value="">1 de Enero</option>
                                 <option value="">1 de Febrero</option>
                                 <option value="">1 de Marzo</option>
@@ -230,7 +238,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Cantidad de alumnos a cancelar </label>
-                            <select class="form-select" id="select-alumnos" onChange="showStudentsInputs()" required>
+                            <select class="form-select" id="select-alumnos" name="alumnos-cancelar" onChange="showStudentsInputs()" required>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -242,25 +250,25 @@
                         <div class="mb-3" id="alumno-1">
                             <label for="" class="form-label" >Alumno 1
                             </label>
-                            <input type="text" class="form-control" required>
+                            <input type="text" class="form-control" name="alumnoName-1" required>
                         </div>
                         <div id="show-not">
                             <div class="mb-3" id="alumno-2">
                                 <label for="" class="form-label" >Alumno 2</label>
-                                <input type="text" class="form-control" >
+                                <input type="text" class="form-control" name="alumnoName-2" >
                             </div>
                             <div class="mb-3" id="alumno-3">
                                 <label for="" class="form-label" >Alumno 3
                                 </label>
-                                <input type="text" class="form-control" >
+                                <input type="text" class="form-control" name="alumnoName-3" >
                             </div>
                             <div class="mb-3" id="alumno-4">
                                 <label for="" class="form-label">Alumno 4</label>
-                                <input type="text" class="form-control" >
+                                <input type="text" class="form-control" name="alumnoName-4" >
                             </div>
                             <div class="mb-3" id="alumno-5">
                                 <label for="" class="form-label" >Alumno 5</label>
-                                <input type="text" class="form-control" >
+                                <input type="text" class="form-control" name="alumnoName-5" >
                             </div>
                         </div>
                         
@@ -268,7 +276,7 @@
                             <div class="g-recaptcha" data-sitekey="6Lf2jjAqAAAAADY3Eek_Z0MKJkEIJkHtw2h-3sJQ"></div>
                         </div>-->
                         <div>
-                            <button type="submit" onClick="">Enviar cancelación</button>
+                            <button type="submit">Enviar cancelación</button>
                         </div>
                     </form>
                 </div>
