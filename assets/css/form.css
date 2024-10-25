@@ -1,0 +1,37 @@
+.form-container{
+    display: flex;
+    flex-direction: row;
+}
+.formG h1{
+    font-family: "Days One", sans-serif;
+    color: #e05137;
+    font-size: 50px;
+    font-size: 400;
+    text-align: center;
+    margin-top: 50px;
+}
+#alumno-2{
+    display: none;
+}
+#alumno-3{
+    display: none;
+}
+#alumno-4{
+    display: none;
+}
+#alumno-5{
+    display: none;
+}
+
+#alumno-2.show{
+    display: block;
+}
+#alumno-3.show{
+    display: block;
+}
+#alumno-4.show{
+    display: block;
+}
+#alumno-5.show{
+    display: block;
+}
